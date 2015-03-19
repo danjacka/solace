@@ -4,7 +4,8 @@
             [compojure.route :as route]
             [clojure.java.io :as io]
             [ring.adapter.jetty :as jetty]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [solace.use-cases.add-solace :refer :all]))
 
 (def content-type-plain-text {"Content-Type"     "text/plain"})
 
@@ -19,6 +20,11 @@
   {:status  200
    :headers content-type-plain-text 
    :body    "Solace"})
+
+(def created
+  {:status  201
+   :headers content-type-plain-text 
+   :body    "Created"})
    
 (defn shell-log[& messages] (println (str "[LOG] " messages)))   
 
@@ -32,10 +38,19 @@
     (if (basic-authorise request who)
         ok
         unauthorized))
-   
+
+(def fake-persistence
+  (fn[n] (println "Saving <%s>", n)))
+
+(defn- create[mood]
+  (add-solace fake-persistence (Integer/parseInt mood))
+  (println "Storing mood <" mood ">")
+  created)
+
 (defroutes app
-  (GET "/" request (authorise-as request anon))
-  (ANY "*" [] (route/not-found (slurp (io/resource "404.html")))))
+  (POST "/" [mood] (create mood))
+  (GET  "/" request (authorise-as request anon))
+  (ANY  "*" [] (route/not-found (slurp (io/resource "404.html")))))
 
 (defn -main [& [port]]
   (let [port (Integer. (or port (env :port) 5000))]

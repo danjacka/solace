@@ -7,6 +7,6 @@
                  [compojure "1.1.8"]
                  [ring/ring-jetty-adapter "1.2.2"]
                  [environ "0.5.0"]]
-  :main ^:skip-aot solace.core
+  :main ^:skip-aot solace.web
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

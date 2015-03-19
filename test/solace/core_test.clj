@@ -1,13 +1,7 @@
 (ns solace.core-test
   (:require [clojure.test :refer :all]
-            [solace.core :refer :all]))
-
-(defn- valid?[n]
-  (> n 0))
-
-(defn add-solace [persistence n]
-  (when (valid? n) 
-    (persistence n)))
+            [solace.core :refer :all]
+            [solace.use-cases.add-solace :refer :all]))
 
 (def counter (atom 0))
 

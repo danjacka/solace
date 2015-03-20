@@ -1,8 +1,7 @@
 (ns solace.adapters.in-memory-store
   (:refer-clojure :exclude [list]))
 
-(def ^{:private true} store
-  (atom {}))
+(def ^{:private true} store  (atom {}))
 
 (defn update [current what]
   (let [n (keyword (str what))]
@@ -12,7 +11,5 @@
         :else (update-in current [n] inc)))))
 
 (defn save[what] (swap! store (fn [current] (update current what))))
-
 (defn list[] @store)
-
 (defn clear [] (reset! store {}))

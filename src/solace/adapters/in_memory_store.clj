@@ -3,7 +3,7 @@
 
 (def ^{:private true} store  (atom {}))
 
-(defn update [current what]
+(defn- update [current what]
   (let [n (keyword (str what))]
     (let [current-n-value (get current n)]
       (cond 

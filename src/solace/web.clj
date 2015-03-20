@@ -3,8 +3,10 @@
             [compojure.handler :refer [site]]
             [compojure.route :as route]
             [clojure.java.io :as io]
+            [clojure.data.json :as json]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
+            [clojure.string]
             [solace.use-cases.add-solace :refer :all]
             [solace.adapters.in-memory-store :as store]))
 
@@ -30,6 +32,7 @@
 (defn shell-log[& messages] (println (str "[LOG] " messages)))   
 (defn authorise [request who log] true)
 (defn- basic-authorise[request, who] (authorise request who shell-log))
+(defn- serialize [m] (json/write-str m))
 
 (def persistence
   (fn[n] 
@@ -38,12 +41,17 @@
 
 (defn- create[mood]
   (add-solace persistence (Integer/parseInt mood))
-  (println "Storing mood <" mood ">")
+  (println (str "Storing mood <" mood ">"))
   created)
+
+(defn- find-all[]
+  {:status  200
+   :headers content-type-plain-text 
+   :body    (serialize (store/list)) })
 
 (defroutes app
   (POST "/" [mood] (create mood))
-  (GET  "/" request ok)
+  (GET  "/" [] (find-all))
   (ANY  "*" [] (route/not-found (slurp (io/resource "404.html")))))
 
 (defn -main [& [port]]

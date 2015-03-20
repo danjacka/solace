@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.8"]
                  [ring/ring-jetty-adapter "1.2.2"]
-                 [environ "0.5.0"]]
+                 [environ "0.5.0"]
+                 [org.clojure/data.json "0.2.6"]]
   :main ^:skip-aot solace.web
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

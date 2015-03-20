@@ -1,4 +1,5 @@
-(ns solace.adapters.in-memory-store)
+(ns solace.adapters.in-memory-store
+  (:refer-clojure :exclude [list]))
 
 (def ^{:private true} store
   (atom {}))

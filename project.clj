@@ -7,7 +7,8 @@
                  [compojure "1.1.8"]
                  [ring/ring-jetty-adapter "1.2.2"]
                  [environ "0.5.0"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [org.clojure/data.json "0.2.6"] 
+                 [clojurewerkz/spyglass "1.0.0"]]
   :main ^:skip-aot solace.web
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

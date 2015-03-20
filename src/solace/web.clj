@@ -5,7 +5,8 @@
             [clojure.java.io :as io]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
-            [solace.use-cases.add-solace :refer :all]))
+            [solace.use-cases.add-solace :refer :all]
+            [solace.adapters.in-memory-store :as store]))
 
 (def content-type-plain-text {"Content-Type"     "text/plain"})
 
@@ -27,29 +28,22 @@
    :body    "Created"})
    
 (defn shell-log[& messages] (println (str "[LOG] " messages)))   
+(defn authorise [request who log] true)
+(defn- basic-authorise[request, who] (authorise request who shell-log))
 
-(defn authorise [request who log]
-  true)
-
-(defn- basic-authorise[request, who]
-    (authorise request who shell-log))
-   
-(defn authorise-as [request, who]
-    (if (basic-authorise request who)
-        ok
-        unauthorized))
-
-(def fake-persistence
-  (fn[n] (println "Saving <%s>", n)))
+(def persistence
+  (fn[n] 
+    (println "Saving <" n ">")
+    (store/save n)))
 
 (defn- create[mood]
-  (add-solace fake-persistence (Integer/parseInt mood))
+  (add-solace persistence (Integer/parseInt mood))
   (println "Storing mood <" mood ">")
   created)
 
 (defroutes app
   (POST "/" [mood] (create mood))
-  (GET  "/" request (authorise-as request anon))
+  (GET  "/" request ok)
   (ANY  "*" [] (route/not-found (slurp (io/resource "404.html")))))
 
 (defn -main [& [port]]

@@ -1,4 +1,4 @@
-(ns solace.about-in-memory-storage
+(ns solace.system-tests.about-in-memory-storage
   (:require [clojure.test :refer :all]
             [solace.core :refer :all]
             [solace.adapters.in-memory-store :as store]))

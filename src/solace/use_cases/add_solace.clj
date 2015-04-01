@@ -2,9 +2,8 @@
   (:refer-clojure :exclude [read]))
 
 (defn- valid?[n]
-  (> n 0))
+  (and (>= n 1) (<= n 5)))
 
 (defn add-solace [persistence n]
-  (when (valid? n) 
+  (when (valid? n)
     (persistence n)))
-

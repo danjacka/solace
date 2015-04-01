@@ -25,6 +25,19 @@
     (is (= @counter 0), "Expected that the persistence function would NOT have been called at all because the value supplied is not valid")))
 
 ;; only supports 1-5
+(deftest it-does-not-support-numeric-values-above-five
+  (testing "for example 6"
+    (add-solace fake-persistence 6)
+    (is (= @counter 0), "Expected NOT to persist a value above five")))
+
+(deftest but-it-does-support-values-between-one-and-fice
+  (testing "for example 3"
+    (add-solace fake-persistence 3)
+    (is (= @counter 1)))
+  (testing "1 will also work (and sum the persistence counter)"
+    (add-solace fake-persistence 1)
+    (is (= @counter 2))))
+
 ;; supports profanity: arse = 1, feck = 2, jubblies = 3, philbo = 4, ricky-bizzness = 5
 ;; any other tokens are rejected outright
 ;; persistence not notified when invalid

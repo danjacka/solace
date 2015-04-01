@@ -39,5 +39,18 @@
     (is (= @counter 2))))
 
 ;; supports profanity: arse = 1, feck = 2, jubblies = 3, philbo = 4, ricky-bizzness = 5
+(deftest when-ben-has-to-buy-a-coffee-and-they-tell-him-the-price-he-sez
+  (testing "feck"
+    (add-solace fake-persistence "feck")
+    (is (= @counter 1)))
+  (testing "arse"
+    (add-solace fake-persistence "arse")
+    (is (= @counter 2)))
+  (testing "but not some other phrase")
+    (add-solace fake-persistence "actually, that seems reasonable")
+    (is (= @counter 2)))
+
+
+
 ;; any other tokens are rejected outright
 ;; persistence not notified when invalid

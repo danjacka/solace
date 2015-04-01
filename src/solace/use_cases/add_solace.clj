@@ -2,7 +2,7 @@
   (:refer-clojure :exclude [read]))
 
 (def ^:private valid-expletives
-  (assoc {} :feck 1 :arse 1))
+  (assoc {} :arse 1 :feck 2 :jubblies 3))
 
 (defn- valid?[n]
   (cond
@@ -13,9 +13,9 @@
 (defn- value-for[n]
   (cond
     (instance? Long n) n
-    (instance? String n) (get valid-expletives n)
+    (instance? String n) (get valid-expletives (keyword n))
     :else (throw (Exception. "invalid value passed to VALUE-FOR this should be impossible!"))))
 
 (defn add-solace [persistence n]
   (when (valid? n)
-    (persistence n)))
+    (persistence (value-for n))))

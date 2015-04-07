@@ -13,7 +13,7 @@
      true
      (catch Exception e false))) 
   
-(defn numeric?[n] 
+(defn- numeric?[n] 
   (if (number? n) true (numeric-string? n)))  
   
 (defn- valid?[n]

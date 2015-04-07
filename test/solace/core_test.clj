@@ -19,6 +19,15 @@
 
 (use-fixtures :each before-each)
 
+(deftest adding-solace-returns-true-on-success
+  (testing "for example, the positive case"
+    (let [ok? (add-solace fake-persistence 1)]
+      (is (= true ok?), "Expected a valid mood to return true")))
+      
+  (testing "for example, the negative case"
+    (let [ok? (add-solace fake-persistence 666)]
+      (is (= false ok?), "Expected an invalid mood to return false"))))
+
 (deftest adding-solace-notifies-persistence
   (testing "that it calls it once exactly"
     (add-solace fake-persistence 1)

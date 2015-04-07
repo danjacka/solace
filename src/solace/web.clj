@@ -28,6 +28,11 @@
   {:status  201
    :headers content-type-plain-text 
    :body    "Created"})
+ 
+ (def bad-request
+  {:status  400
+   :headers content-type-plain-text 
+   :body    "Bad Request"})
    
 (defn shell-log[& messages] (println (str "[LOG] " messages)))   
 (defn authorise [request who log] true)
@@ -40,9 +45,8 @@
     (store/save n)))
 
 (defn- create[mood]
-  (add-solace persistence (Integer/parseInt mood))
-  (println (str "Storing mood <" mood ">"))
-  created)
+  (let [ok? (add-solace persistence mood)]
+    (if ok? created bad-request)))
 
 (defn- find-all[]
   {:status  200

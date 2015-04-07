@@ -61,7 +61,7 @@
   (testing "feck"
     (add-solace fake-persistence "feck")
     (is (= @counter 1))
-    (is (= (first @values-seen) 2)))
+    (is (= (:mood (first @values-seen) 2))))
   (testing "arse"
     (add-solace fake-persistence "arse")
     (is (= @counter 2))
@@ -74,8 +74,7 @@
   (testing "jubblies"
     (add-solace fake-persistence "jubblies")
     (is (= @counter 1))
-    (is (= (first @values-seen) 3))))
-
+    (is (= (:mood (first @values-seen)) 3))))
 
 ;; any other tokens are rejected outright
 ;; persistence not notified when invalid

@@ -1,6 +1,9 @@
 (ns solace.use-cases.add-solace
-  (:refer-clojure :exclude [read]))
+  (:refer-clojure :exclude [read])
+  (:require [solace.core :refer :all]))
 
+(defn- q[mood] (struct quantum mood nil))
+  
 (def ^:private valid-expletives
   (assoc {} :arse 1 :feck 2 :jubblies 3))
 
@@ -30,5 +33,5 @@
 
 (defn add-solace [persistence n]
   (when (valid? n)
-    (persistence (value-for n)))
+    (persistence (q (value-for n))))
     (valid? n))

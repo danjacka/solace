@@ -11,7 +11,11 @@
       (cond 
         (nil? current-n-value) (merge current {n 1}) 
         :else (update-in current [n] inc)))))
-
-(defn save[what] (swap! store (fn [current] (update current (:mood what)))))
+        
+(defn save[what] 
+  (let [val (:mood what)]
+    (when-not (clojure.string/blank? (str val))
+      (swap! store (fn [current] (update current val))))))
+      
 (defn list[] @store)
 (defn clear [] (reset! store {}))

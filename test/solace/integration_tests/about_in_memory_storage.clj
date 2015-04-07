@@ -27,4 +27,15 @@
     (let [result (store/list)]
       (is (= 2 (:1 result)), "Expected the count to be <2> because we have added it twice"))))
 
+(deftest cannot-save-blank-values
+  (testing "like nil"    
+    (let [result (store/save (q nil))]
+      (is (= true (empty? (store/list))))))
+  (testing "or empty string"    
+    (let [result (store/save (q (str "")))]
+      (is (= true (empty? (store/list))))))
+  (testing "or just whitespace"    
+    (let [result (store/save (q (str " ")))]
+      (is (= true (empty? (store/list)))))))
+
 ;; it returns a struct containing the mood and a count

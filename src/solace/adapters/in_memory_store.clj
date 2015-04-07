@@ -3,8 +3,6 @@
 
 (def ^{:private true} store  (atom {}))
 
-(defstruct quantum :mood :timestamp)
-
 (defn- update [current what]
   (let [n (keyword (str what))]
     (let [current-n-value (get current n)]

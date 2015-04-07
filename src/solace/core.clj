@@ -1,7 +1,4 @@
 (ns solace.core
   (:gen-class))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defstruct quantum :mood :timestamp)

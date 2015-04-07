@@ -9,7 +9,7 @@
 
 (use-fixtures :each before-each)
 
-(defn- q[mood] (struct store/quantum mood nil))
+(defn- q[mood] (struct quantum mood nil))
 
 (deftest can-save
   (testing "like this"

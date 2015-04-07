@@ -5,7 +5,7 @@
 (defn- q[mood] (struct quantum mood nil))
   
 (def ^:private valid-expletives
-  (assoc {} :arse 1 :feck 2 :jubblies 3))
+  (assoc {} :arse 1 :feck 2 :jubblies 3 :philb0 4 :ricky-bizzness 5))
 
 (defn- parse[n]
   (if (number? n) n (Integer/parseInt n))) 
